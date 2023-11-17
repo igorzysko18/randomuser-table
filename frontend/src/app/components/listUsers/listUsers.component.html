@@ -1,0 +1,77 @@
+<div class="container">
+  <h1 class="page-title">Cadastro de Usuários</h1>
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="importUsers()" [disabled]="importing">Importar Usuários</button>
+    <button mat-raised-button color="primary" (click)="addUser()" [disabled]="importing">Adicionar Usuário</button>
+    <button mat-raised-button color="accent" (click)="getUsers()">Atualizar Lista</button>
+    <button mat-raised-button color="warn" (click)="logout()">Sair</button>
+  </div>
+  <div class="search-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Selecione o campo</mat-label>
+      <mat-select [(value)]="selectedField">
+        <mat-option value="name">Nome</mat-option>
+        <mat-option value="username">Usuário</mat-option>
+        <mat-option value="email">E-mail</mat-option>
+        <!-- Adicione mais opções conforme necessário -->
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Texto de busca</mat-label>
+      <input matInput type="text" [(ngModel)]="searchText" />
+    </mat-form-field>
+  
+    <button mat-raised-button color="primary" (click)="search()">Buscar</button>
+  </div>
+  <div class="loading-indicator" *ngIf="importing">
+    <mat-progress-spinner mode="indeterminate" diameter="50"> </mat-progress-spinner>
+  </div>
+
+  <div class="table-container">
+    <mat-table [dataSource]="users" >
+      <ng-container matColumnDef="picture">
+        <mat-header-cell *matHeaderCellDef>Foto</mat-header-cell>
+        <mat-cell *matCellDef="let user">
+          <img [src]="user.picture" alt="User" width="50" height="50">
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Nome</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.name }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="username">
+        <mat-header-cell *matHeaderCellDef>Usuário</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.username }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="birthday">
+        <mat-header-cell *matHeaderCellDef>Aniversário</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.birthday | date:'dd/MM/yyyy' }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="phone_number">
+        <mat-header-cell *matHeaderCellDef>Telefone</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{ user.phone_number }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+        <mat-cell *matCellDef="let user">
+          <button mat-icon-button (click)="editUser(user)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteUser(user)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="['picture', 'name', 'username', 'birthday', 'phone_number', 'actions']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['picture', 'name','username', 'birthday' , 'phone_number','actions']"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[10, 20, 30, 40, 50]" (page)="onPageChange($event)" [length]="length"></mat-paginator>
+  </div>
+</div>

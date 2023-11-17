@@ -1,0 +1,52 @@
+<h1>{{ nameMode }}</h1>
+<form (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>
+        Usuário para login
+        <mat-icon>login</mat-icon>
+    </mat-label>
+    <input matInput placeholder="Username" [(ngModel)]="user.username" name="username" required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>
+        Nome
+    </mat-label>
+    <input matInput placeholder="Name" [(ngModel)]="user.name" name="name" required>
+  </mat-form-field>
+  <mat-form-field *ngIf="mode === 'add'">
+    <mat-label>
+      Senha
+    </mat-label>
+    <input matInput placeholder="" value="" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="user.password" name="password">
+    <mat-icon matSuffix (click)="togglePasswordVisibility()">{{ showPassword ? 'visibility_off' : 'visibility' }}
+    </mat-icon>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>
+        E-mail
+    </mat-label>
+    <input matInput placeholder="Email" [(ngModel)]="user.email" name="email" required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>
+        Data de Aniversário
+    </mat-label>
+    <input matInput type="text" placeholder="dd/mm/yyyy" [(ngModel)]="user.birthday" name="birthday" (blur)="validateDate($event)" required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>
+        Telefone
+    </mat-label>
+    <input matInput placeholder="Phone Number" [(ngModel)]="user.phone_number" name="phone_number" required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>
+      Url da foto.
+    </mat-label>
+    <input matInput placeholder="Picture URL" [(ngModel)]="user.picture" name="picture" required>
+  </mat-form-field>
+  <div class="button-container">
+    <button mat-raised-button color="primary" type="submit">Salvar</button>
+    <button mat-raised-button color="warn" (click)="closeDialog()" type="button">Cancelar</button>
+  </div>
+</form>
