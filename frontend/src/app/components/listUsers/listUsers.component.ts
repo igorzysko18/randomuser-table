@@ -76,8 +76,6 @@ export class UserListComponent implements OnInit {
   onPageChange(event: PageEvent) {
     const pageIndex = event.pageIndex;
     const pageSize = event.pageSize;
-  
-    // Atualize sua chamada de API com pageIndex e pageSize
     this.getUsers(pageIndex, pageSize);
   }
   
@@ -132,6 +130,17 @@ export class UserListComponent implements OnInit {
         this.showNotification('Erro ao buscar os usuários.', '');
       }
     );
+  }
+
+  resetSearch(): void {
+    this.selectedField = '';
+    this.searchText = ''; 
+    if (this.paginator) {
+      this.paginator.pageIndex = 0;
+      this.paginator.pageSize = 10; 
+      this.getUsers(0, 10); 
+    }
+    this.getUsers(); 
   }
 
   showNotification (message: string, action: string, duration = 2000) {

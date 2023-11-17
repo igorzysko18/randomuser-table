@@ -11,13 +11,15 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
-      tap((event: HttpEvent<any>) => {
-        if (event instanceof HttpResponse) {
-          if (event.status === 401) {
-            this.router.navigate(['/login']);
-          }
+      tap(
+        (event: HttpEvent<any>) => {},
+        (error: any) => {
+        if (error.status === 401) {
+          localStorage.removeItem('authToken');
+          this.router.navigate(['/login']);
         }
-      })
+      }
+      )
     );
   }
 }

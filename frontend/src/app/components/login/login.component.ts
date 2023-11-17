@@ -14,7 +14,6 @@ export class LoginComponent {
   public userPassword: string = "";
   public hasToWait: boolean = false;
   public showPassword: Boolean = false;
-  public keepUserConnected: Boolean = false;
 
   constructor(
     private snackBar: MatSnackBar,
@@ -31,7 +30,7 @@ export class LoginComponent {
       if (this.userLogin && this.userPassword) {
         this.userService.getUserFromLogin({ username: this.userLogin, password: this.userPassword})
           .subscribe(
-            (response: any) => {
+            async (response: any) => {
               localStorage.setItem('authToken', response.token);
               this.hasToWait = false;
               this.showNotification('Login efetuado com êxito', '');

@@ -13,16 +13,14 @@
         <mat-option value="name">Nome</mat-option>
         <mat-option value="username">Usuário</mat-option>
         <mat-option value="email">E-mail</mat-option>
-        <!-- Adicione mais opções conforme necessário -->
       </mat-select>
     </mat-form-field>
-  
     <mat-form-field appearance="fill">
       <mat-label>Texto de busca</mat-label>
       <input matInput type="text" [(ngModel)]="searchText" />
     </mat-form-field>
-  
     <button mat-raised-button color="primary" (click)="search()">Buscar</button>
+    <button mat-raised-button color="warn" (click)="resetSearch()">Limpar Busca</button>
   </div>
   <div class="loading-indicator" *ngIf="importing">
     <mat-progress-spinner mode="indeterminate" diameter="50"> </mat-progress-spinner>
