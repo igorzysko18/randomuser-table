@@ -1,5 +1,5 @@
 {
-  "name": "api-nava",
+  "name": "api-randomuser",
   "version": "1.0.0",
   "description": "Desafio - Nava",
   "main": "./src/app.js",
@@ -8,7 +8,7 @@
     "test": "test"
   },
   "keywords": [
-    "spa"
+    "api-randomuser"
   ],
   "author": "igor.zysko",
   "license": "ISC",

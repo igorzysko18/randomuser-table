@@ -29,18 +29,23 @@ export class LoginComponent {
     try {
       if (this.userLogin && this.userPassword) {
         this.userService.getUserFromLogin({ username: this.userLogin, password: this.userPassword})
-          .subscribe(
-            async (response: any) => {
-              localStorage.setItem('authToken', response.token);
-              this.hasToWait = false;
-              this.showNotification('Login efetuado com êxito', '');
-              this.router.navigate(['usuarios']);
-            },
-            (error: any) => {
-              this.showNotification('Não foi possível efetuar o login. Tente novamente mais tarde.', 'Ok', 3000);
-              this.hasToWait = false;
-            }
-          )
+        .subscribe(
+          (response: any) => {
+            this.setToken(response.token)
+              .then(() => {
+                this.hasToWait = false;
+                this.showNotification('Login efetuado com êxito', '');
+                this.router.navigate(['/usuarios']);
+              })
+              .catch((error) => {
+                console.error('Erro ao definir o token: ', error);
+              });
+          },
+          (error: any) => {
+            this.showNotification('Não foi possível efetuar o login. Tente novamente mais tarde.', 'Ok', 3000);
+            this.hasToWait = false;
+          }
+        )
       }
       else {
         this.hasToWait = false;
@@ -59,4 +64,16 @@ export class LoginComponent {
   showNotification (message: string, action: string, duration = 2000) {
     this.snackBar.open(message, action, { duration: duration })
   }
+
+  setToken (token: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      try {
+        localStorage.setItem('authToken', token);
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
 }

@@ -1,0 +1,36 @@
+version: '3'
+services:
+  api:
+    build:
+      context: ./backend
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+    networks:
+      - nava-network
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - '4200:80'
+    depends_on:
+      - api
+    networks:
+      - nava-network
+
+  postgres:
+    build:
+      context: ./postgres
+    environment:
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - '5432:5432'
+    networks:
+      - nava-network
+
+networks:
+  nava-network:

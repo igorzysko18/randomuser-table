@@ -31,7 +31,7 @@
     <mat-label>
         Data de Aniversário
     </mat-label>
-    <input matInput type="text" placeholder="dd/mm/yyyy" [(ngModel)]="user.birthday" name="birthday" (blur)="validateDate($event)" required>
+    <input matInput type="text" placeholder="dd/mm/yyyy" [(ngModel)]="user.birthday" name="birthday" (ngModelChange)="formatDate($event)" required>
   </mat-form-field>
   <mat-form-field>
     <mat-label>
@@ -43,7 +43,7 @@
     <mat-label>
       Url da foto.
     </mat-label>
-    <input matInput placeholder="Picture URL" [(ngModel)]="user.picture" name="picture" required>
+    <input matInput placeholder="Picture URL" [(ngModel)]="user.picture" name="picture">
   </mat-form-field>
   <div class="button-container">
     <button mat-raised-button color="primary" type="submit">Salvar</button>

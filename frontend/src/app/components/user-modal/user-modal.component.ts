@@ -49,6 +49,7 @@ export class UserModalComponent {
       if (JSON.stringify(this.user) === JSON.stringify(this.originalUser)) {
         this.dialogRef.close(this.user);
       } else {
+        this.user.birthday = moment(this.user.birthday, 'DD/MM/YYYY').format('YYYY-MM-DD');
         this.userService.editUser(this.user).subscribe(
           (data: any[]) => {
             this.dialogRef.close(this.user);
@@ -59,6 +60,7 @@ export class UserModalComponent {
         )
       }
     } else {
+      this.user.birthday = moment(this.user.birthday, 'DD/MM/YYYY').format('YYYY-MM-DD');
       this.userService.createUser(this.user).subscribe(
         (data: any[]) => {
           this.dialogRef.close(this.user);
@@ -74,16 +76,19 @@ export class UserModalComponent {
     this.showPassword = !this.showPassword;
   }
 
-  validateDate(event: any) {
-    const inputDate = new Date(event.target.value);
-    if (!isNaN(inputDate.getTime())) {
-      const formattedDate = `${inputDate.getDate()}/${inputDate.getMonth() + 1}/${inputDate.getFullYear()}`;
-      this.user.birthday = formattedDate;
-    } else {
-      this.user.birthday = '';
+  formatDate(value: string) {
+    let res = value.replace(/\D/g, "");
+    if (res.length > 2) {
+      res = res.slice(0, 2) + '/' + res.slice(2);
     }
+    if (res.length > 5) {
+      res = res.slice(0, 5) + '/' + res.slice(5);
+    }
+    if (res.length > 10) {
+      res = res.slice(0, 10);
+    }
+    this.user.birthday = res;
   }
-  
 
   closeDialog(): void {
     this.dialogRef.close();
